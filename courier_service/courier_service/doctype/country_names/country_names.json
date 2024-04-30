@@ -1,0 +1,31 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-01-18 13:09:55.672903",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "countries"
+ ],
+ "fields": [
+  {
+   "fieldname": "countries",
+   "fieldtype": "Link",
+   "label": "Countries",
+   "options": "Country"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-04-02 13:37:41.253713",
+ "modified_by": "Administrator",
+ "module": "Courier Service",
+ "name": "Country Names",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

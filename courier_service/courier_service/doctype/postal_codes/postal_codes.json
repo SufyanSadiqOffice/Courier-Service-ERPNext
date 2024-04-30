@@ -1,0 +1,80 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{country}-{postal_code}",
+ "creation": "2024-01-07 01:53:00.690597",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "postal_code",
+  "city",
+  "country",
+  "column_break_sjkz",
+  "area",
+  "iata_code"
+ ],
+ "fields": [
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Country",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "postal_code",
+   "fieldtype": "Data",
+   "label": "Postal Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "City",
+   "options": "City"
+  },
+  {
+   "fieldname": "area",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Area",
+   "options": "\nExtended\nRemote"
+  },
+  {
+   "fieldname": "iata_code",
+   "fieldtype": "Data",
+   "label": "IATA Code"
+  },
+  {
+   "fieldname": "column_break_sjkz",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-04-05 14:56:46.745915",
+ "modified_by": "Administrator",
+ "module": "Courier Service",
+ "name": "Postal Codes",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

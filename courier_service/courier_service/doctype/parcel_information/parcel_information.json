@@ -1,0 +1,193 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-01-17 17:20:10.832114",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "packaging_type",
+  "weight_per_parcel",
+  "column_break_ytvq",
+  "total_identical_parcels",
+  "total_weight",
+  "dim_weight_section",
+  "length",
+  "width",
+  "height",
+  "column_break_nhek",
+  "dim_weight",
+  "total_dim_weight",
+  "max_over_limit",
+  "lps",
+  "add_handling",
+  "declare_value_section",
+  "declare_value",
+  "column_break_nkpr",
+  "reference_no_1",
+  "reference_no_2",
+  "actual_weight_section",
+  "actual_weight_per_parcel",
+  "actual_weight"
+ ],
+ "fields": [
+  {
+   "fieldname": "packaging_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Packaging Type",
+   "options": "Package Types",
+   "reqd": 1
+  },
+  {
+   "fieldname": "total_identical_parcels",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Total Identical Parcels",
+   "reqd": 1
+  },
+  {
+   "fieldname": "weight_per_parcel",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Weight (KG) Per Parcel",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "length",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Length  (cm)"
+  },
+  {
+   "default": "1",
+   "fieldname": "width",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Width  (cm)"
+  },
+  {
+   "default": "1",
+   "fieldname": "height",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Height  (cm)"
+  },
+  {
+   "default": "0",
+   "fieldname": "dim_weight",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "DIM Weight (KG) Per Parcel",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "declare_value",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Declare Value"
+  },
+  {
+   "fieldname": "total_weight",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Total Weight (KG)",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "actual_weight",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Actual Weight",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_ytvq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dim_weight_section",
+   "fieldtype": "Section Break",
+   "label": "DIM Weight"
+  },
+  {
+   "fieldname": "column_break_nhek",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "declare_value_section",
+   "fieldtype": "Section Break",
+   "label": "Declare Value"
+  },
+  {
+   "fieldname": "actual_weight_section",
+   "fieldtype": "Section Break",
+   "label": "Actual Weight"
+  },
+  {
+   "default": "0",
+   "fieldname": "total_dim_weight",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Total DIM Weight (KG)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "actual_weight_per_parcel",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Actual Weight Per Parcel",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_nkpr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reference_no_1",
+   "fieldtype": "Data",
+   "label": "Reference No 1"
+  },
+  {
+   "fieldname": "reference_no_2",
+   "fieldtype": "Data",
+   "label": "Reference No 2"
+  },
+  {
+   "default": "0",
+   "fieldname": "max_over_limit",
+   "fieldtype": "Check",
+   "label": "Max Over Limit",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "lps",
+   "fieldtype": "Check",
+   "label": "LPS",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "add_handling",
+   "fieldtype": "Check",
+   "label": "Add. Handling",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-04-15 15:27:42.077511",
+ "modified_by": "Administrator",
+ "module": "Courier Service",
+ "name": "Parcel Information",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

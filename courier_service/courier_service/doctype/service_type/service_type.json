@@ -1,0 +1,55 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:service_type",
+ "creation": "2024-01-07 01:38:33.408088",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "service_type",
+  "section_break_ecvj",
+  "description"
+ ],
+ "fields": [
+  {
+   "fieldname": "service_type",
+   "fieldtype": "Data",
+   "label": "Service Type",
+   "unique": 1
+  },
+  {
+   "fieldname": "section_break_ecvj",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-01-07 02:35:47.019736",
+ "modified_by": "Administrator",
+ "module": "Courier Service",
+ "name": "Service Type",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
