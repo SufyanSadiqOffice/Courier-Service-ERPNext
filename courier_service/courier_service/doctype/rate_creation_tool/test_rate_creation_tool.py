@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestRates(FrappeTestCase):
+class TestRateCreationTool(FrappeTestCase):
 	pass

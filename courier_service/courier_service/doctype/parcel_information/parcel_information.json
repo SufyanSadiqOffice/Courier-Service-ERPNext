@@ -54,21 +54,22 @@
    "reqd": 1
   },
   {
-   "default": "1",
+   "default": "0",
    "fieldname": "length",
    "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Length  (cm)"
+   "label": "Length  (cm)",
+   "reqd": 1
   },
   {
-   "default": "1",
+   "default": "0",
    "fieldname": "width",
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Width  (cm)"
   },
   {
-   "default": "1",
+   "default": "0",
    "fieldname": "height",
    "fieldtype": "Float",
    "in_list_view": 1,
@@ -181,7 +182,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-04-15 15:27:42.077511",
+ "modified": "2024-07-08 19:36:57.803108",
  "modified_by": "Administrator",
  "module": "Courier Service",
  "name": "Parcel Information",

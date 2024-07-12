@@ -1,37 +1,48 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2024-01-07 21:36:27.232381",
+ "creation": "2024-06-28 10:53:01.463798",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "weight",
-  "rate"
+  "from_weight",
+  "to_weight",
+  "percentage"
  ],
  "fields": [
   {
-   "fieldname": "weight",
+   "default": "0",
+   "fieldname": "from_weight",
    "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Weight",
+   "label": "From Weight",
    "reqd": 1
   },
   {
-   "fieldname": "rate",
-   "fieldtype": "Currency",
+   "default": "0",
+   "fieldname": "to_weight",
+   "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Rate",
+   "label": "To Weight",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "percentage",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Percentage",
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-06-28 13:01:00.084539",
+ "modified": "2024-06-28 17:10:26.707058",
  "modified_by": "Administrator",
  "module": "Courier Service",
- "name": "Package Rate",
+ "name": "Weight Slab",
  "owner": "Administrator",
  "permissions": [],
  "sort_field": "modified",

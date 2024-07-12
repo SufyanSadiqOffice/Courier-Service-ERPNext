@@ -53,6 +53,7 @@ class Booking(Document):
 
 	def before_save(self):
 
+
 		self.extended_area_surcharge = 0
 		self.remote_area_surcharge = 0
 		self.add_handling_charges = 0
@@ -63,6 +64,8 @@ class Booking(Document):
 		weight_temp = 0.0
 		declare_temp = 0.0
 		pdl = frappe.get_doc('Package Dimensions Limitation','Package Dimensions Limitation')
+
+
 
 		for row in self.parcel_information :
 
@@ -199,6 +202,7 @@ class Booking(Document):
 
 		# Extended / Remote Area
 		dest_postal_code = self.consignee_postal_code
+		c_doc = frappe.get_doc("Customer",self.customer)
 		pc_list = frappe.get_list('Postal Codes',
 						   filters = {
 							   'country' : self.consignee_country,
@@ -208,74 +212,40 @@ class Booking(Document):
 						
 		if pc_list :
 			pc_doc = frappe.get_doc('Postal Codes',pc_list[0].name)
-		
 			# pc_doc = frappe.get_doc('Postal Codes',dest_postal_code)
 			if pc_doc :
 				if pc_doc.area == 'Extended' :
-					self.extended_area_surcharge = 1
-					add_charge_doc = frappe.get_doc('Additional Charges','Extended Area Surcharge')
-					amount_per_kg = float(add_charge_doc.amount_per_kg)
-					weight = float(self.weight)
-					w = amount_per_kg * weight
-					total_add_ch = total_add_ch + max(add_charge_doc.amount_per_shipment, w)
-					ex_area = ex_area + max(add_charge_doc.amount_per_shipment, w)
+					if c_doc.custom_extended_area_surcharge == 1:
+						self.extended_area_surcharge = 1
+						add_charge_doc = frappe.get_doc('Additional Charges','Extended Area Surcharge')
+						amount_per_kg = float(add_charge_doc.amount_per_kg)
+						weight = float(self.weight)
+						w = amount_per_kg * weight
+						total_add_ch = total_add_ch + max(add_charge_doc.amount_per_shipment, w)
+						ex_area = ex_area + max(add_charge_doc.amount_per_shipment, w)
 
-				if pc_doc.area == 'Remote' :
-					self.remote_area_surcharge = 1
-					add_charge_doc = frappe.get_doc('Additional Charges','Remote Area Surcharge')
-					amount_per_kg = float(add_charge_doc.amount_per_kg)
-					weight = float(self.weight)
-					w = amount_per_kg * weight
-					total_add_ch = total_add_ch + max(add_charge_doc.amount_per_shipment, w)
-					rem_area = rem_area + max(add_charge_doc.amount_per_shipment, w)
+				elif pc_doc.area == 'Remote' :
+					if c_doc.custom_remote_area_surcharge == 1:
+						self.remote_area_surcharge = 1
+						add_charge_doc = frappe.get_doc('Additional Charges','Remote Area Surcharge')
+						amount_per_kg = float(add_charge_doc.amount_per_kg)
+						weight = float(self.weight)
+						w = amount_per_kg * weight
+						total_add_ch = total_add_ch + max(add_charge_doc.amount_per_shipment, w)
+						rem_area = rem_area + max(add_charge_doc.amount_per_shipment, w)
 
 
 		# Maximum Over Limit
-		add_charge_type = 'Over Maximum Limits Fee'			
-		add_charge_doc = frappe.get_doc('Additional Charges', add_charge_type)
-		actual_weight = 0
-		no_of_pkg_for_avg = 0
-		single_pkg_no = 0
-		single_pkg_no_for_dim = 0
-		avg = 0
+		if c_doc.custom_over_maximum_limit == 1 :
+			add_charge_type = 'Over Maximum Limits Fee'			
+			add_charge_doc = frappe.get_doc('Additional Charges', add_charge_type)
+			actual_weight = 0
+			no_of_pkg_for_avg = 0
+			single_pkg_no = 0
+			single_pkg_no_for_dim = 0
+			avg = 0
 
-		for row in self.parcel_information:
-			if row.packaging_type:
-				pkg_doc = frappe.get_doc("Package Types", row.packaging_type)
-			else:
-				frappe.throw("Complete Package Details.")
-				
-			if pkg_doc.package == 1:
-				no_of_pkg_for_avg += row.total_identical_parcels
-				actual_weight += row.actual_weight
-				if row.actual_weight_per_parcel > add_charge_doc.max_weight:
-					single_pkg_no += row.total_identical_parcels
-					row.max_over_limit = 1
-				elif ( (row.length + ((2 * row.width) + (2 * row.height))) > add_charge_doc.max_length_plus_girth ) or  (row.length > add_charge_doc.max_length) :
-					single_pkg_no_for_dim += row.total_identical_parcels
-					row.max_over_limit = 1
-
-		if single_pkg_no > 0:
-			total_add_ch = total_add_ch + max(single_pkg_no * add_charge_doc.amount, add_charge_doc.minimum_amount)
-			self.maximum_over_limit = 1
-			max_ovr_lmt = max_ovr_lmt + max(single_pkg_no * add_charge_doc.amount, add_charge_doc.minimum_amount)
-		if single_pkg_no_for_dim > 0:
-			total_add_ch = total_add_ch + max(single_pkg_no * add_charge_doc.amount, add_charge_doc.minimum_amount)
-			self.maximum_over_limit = 1
-			max_ovr_lmt = max_ovr_lmt + max(single_pkg_no * add_charge_doc.amount, add_charge_doc.minimum_amount)
-
-
-		# LPS
-		add_charge_type = 'Large Package Surcharge'
-		add_charge_doc = frappe.get_doc('Additional Charges', add_charge_type)
-		actual_weight = 0
-		no_of_pkg_for_avg = 0
-		single_pkg_no = 0
-		single_pkg_no_for_dim = 0
-		avg = 0
-	
-		for row in self.parcel_information:
-			if row.max_over_limit != 1 :
+			for row in self.parcel_information:
 				if row.packaging_type:
 					pkg_doc = frappe.get_doc("Package Types", row.packaging_type)
 				else:
@@ -286,64 +256,102 @@ class Booking(Document):
 					actual_weight += row.actual_weight
 					if row.actual_weight_per_parcel > add_charge_doc.max_weight:
 						single_pkg_no += row.total_identical_parcels
-						row.lps = 1
-					elif (row.length + ((2 * row.width) + (2 * row.height))) > add_charge_doc.max_length_plus_girth:
+						row.max_over_limit = 1
+					elif ( (row.length + ((2 * row.width) + (2 * row.height))) > add_charge_doc.max_length_plus_girth ) or (row.length > add_charge_doc.max_length) :
 						single_pkg_no_for_dim += row.total_identical_parcels
-						row.lps = 1
+						row.max_over_limit = 1
 
-		if single_pkg_no > 0:
-			total_add_ch = total_add_ch + max(single_pkg_no * add_charge_doc.amount, add_charge_doc.minimum_amount)
-			self.lps = 1
-			lps = lps + max(single_pkg_no * add_charge_doc.amount, add_charge_doc.minimum_amount)
-		if single_pkg_no_for_dim > 0:
-			total_add_ch = total_add_ch + max(single_pkg_no * add_charge_doc.amount, add_charge_doc.minimum_amount)
-			self.lps = 1
-			lps = lps + max(single_pkg_no * add_charge_doc.amount, add_charge_doc.minimum_amount)
+			if single_pkg_no > 0:
+				total_add_ch = total_add_ch + max(single_pkg_no * add_charge_doc.amount, add_charge_doc.minimum_amount)
+				self.maximum_over_limit = 1
+				max_ovr_lmt = max_ovr_lmt + max(single_pkg_no * add_charge_doc.amount, add_charge_doc.minimum_amount)
+			if single_pkg_no_for_dim > 0:
+				total_add_ch = total_add_ch + max(single_pkg_no * add_charge_doc.amount, add_charge_doc.minimum_amount)
+				self.maximum_over_limit = 1
+				max_ovr_lmt = max_ovr_lmt + max(single_pkg_no * add_charge_doc.amount, add_charge_doc.minimum_amount)
+
+
+		# LPS
+		if c_doc.custom_large_package_surcharge == 1 :
+			add_charge_type = 'Large Package Surcharge'
+			add_charge_doc = frappe.get_doc('Additional Charges', add_charge_type)
+			actual_weight = 0
+			no_of_pkg_for_avg = 0
+			single_pkg_no = 0
+			single_pkg_no_for_dim = 0
+			avg = 0
+		
+			for row in self.parcel_information:
+				if row.max_over_limit != 1 :
+					if row.packaging_type:
+						pkg_doc = frappe.get_doc("Package Types", row.packaging_type)
+					else:
+						frappe.throw("Complete Package Details.")
+						
+					if pkg_doc.package == 1:
+						no_of_pkg_for_avg += row.total_identical_parcels
+						actual_weight += row.actual_weight
+						if row.actual_weight_per_parcel > add_charge_doc.max_weight:
+							single_pkg_no += row.total_identical_parcels
+							row.lps = 1
+						elif (row.length + ((2 * row.width) + (2 * row.height))) > add_charge_doc.max_length_plus_girth:
+							single_pkg_no_for_dim += row.total_identical_parcels
+							row.lps = 1
+
+			if single_pkg_no > 0:
+				total_add_ch = total_add_ch + max(single_pkg_no * add_charge_doc.amount, add_charge_doc.minimum_amount)
+				self.lps = 1
+				lps = lps + max(single_pkg_no * add_charge_doc.amount, add_charge_doc.minimum_amount)
+			if single_pkg_no_for_dim > 0:
+				total_add_ch = total_add_ch + max(single_pkg_no * add_charge_doc.amount, add_charge_doc.minimum_amount)
+				self.lps = 1
+				lps = lps + max(single_pkg_no * add_charge_doc.amount, add_charge_doc.minimum_amount)
 
 
 
 
 		# Add Handling	
-		add_charge_doc = frappe.get_doc('Additional Charges','Additional Handling Charges')
-		actual_weight = 0
-		no_of_pkg_for_avg = 0
-		single_pkg_no = 0
-		avg = 0
-		for row in self.parcel_information :
-			if row.max_over_limit != 1 and row.lps != 1 :
-				pkg_doc = frappe.get_doc("Package Types",row.packaging_type)
-				if pkg_doc.package == 1 :
-					no_of_pkg_for_avg = no_of_pkg_for_avg + row.total_identical_parcels
-					actual_weight = actual_weight + row.actual_weight
-					if (row.actual_weight_per_parcel > add_charge_doc.max_weight) or (row.length > add_charge_doc.max_length) or (row.width > add_charge_doc.max_width) or (row.height > add_charge_doc.max_width) :
-						single_pkg_no = single_pkg_no + row.total_identical_parcels
-						row.add_handling = 1
+		if c_doc.custom_additional_handling_charges == 1:
+			add_charge_doc = frappe.get_doc('Additional Charges','Additional Handling Charges')
+			actual_weight = 0
+			no_of_pkg_for_avg = 0
+			single_pkg_no = 0
+			avg = 0
+			for row in self.parcel_information :
+				if row.max_over_limit != 1 and row.lps != 1 :
+					pkg_doc = frappe.get_doc("Package Types",row.packaging_type)
+					if pkg_doc.package == 1 :
+						no_of_pkg_for_avg = no_of_pkg_for_avg + row.total_identical_parcels
+						actual_weight = actual_weight + row.actual_weight
+						if (row.actual_weight_per_parcel > add_charge_doc.max_weight) or (row.length > add_charge_doc.max_length) or (row.width > add_charge_doc.max_width) or (row.height > add_charge_doc.max_width) :
+							single_pkg_no = single_pkg_no + row.total_identical_parcels
+							row.add_handling = 1
 
-		if no_of_pkg_for_avg > 0 :
-			avg = actual_weight / no_of_pkg_for_avg         
+			if no_of_pkg_for_avg > 0 :
+				avg = actual_weight / no_of_pkg_for_avg         
 
-		if avg > add_charge_doc.max_weight :
-			total_add_ch = total_add_ch +  max(no_of_pkg_for_avg*add_charge_doc.amount , add_charge_doc.minimum_amount )
-			add_handling = add_handling + max(no_of_pkg_for_avg*add_charge_doc.amount , add_charge_doc.minimum_amount )
-			self.add_handling_charges = 1
+			if avg > add_charge_doc.max_weight :
+				total_add_ch = total_add_ch +  max(no_of_pkg_for_avg*add_charge_doc.amount , add_charge_doc.minimum_amount )
+				add_handling = add_handling + max(no_of_pkg_for_avg*add_charge_doc.amount , add_charge_doc.minimum_amount )
+				self.add_handling_charges = 1
 
-		else :
-				if single_pkg_no > 0 :
-					total_add_ch = total_add_ch +  max(single_pkg_no*add_charge_doc.amount , add_charge_doc.minimum_amount )
-					add_handling = add_handling + max(no_of_pkg_for_avg*add_charge_doc.amount , add_charge_doc.minimum_amount )
-					self.add_handling_charges = 1
-
-
-		
-		
-		self.total_additional_charges = total_add_ch
+			else :
+					if single_pkg_no > 0 :
+						total_add_ch = total_add_ch +  max(single_pkg_no*add_charge_doc.amount , add_charge_doc.minimum_amount )
+						add_handling = add_handling + max(no_of_pkg_for_avg*add_charge_doc.amount , add_charge_doc.minimum_amount )
+						self.add_handling_charges = 1
 
 
-		
+			
+			
+			self.total_additional_charges = total_add_ch
 
-		if self.total_declare_value > 0 :
-			dec_doc = frappe.get_doc('Additional Charges','Declare Value')
-			self.insurance = max((self.total_declare_value * dec_doc.percentage / 100) , dec_doc.minimum_amount)
+
+		#Insurance On Declare Value
+		if c_doc.custom_insurance_of_declared_value == 1:
+			if self.total_declare_value > 0 :
+				dec_doc = frappe.get_doc('Additional Charges','Declare Value')
+				self.insurance = max((self.total_declare_value * dec_doc.percentage / 100) , dec_doc.minimum_amount)
 
 
 		# Zone
@@ -379,7 +387,7 @@ class Booking(Document):
 				signal = 0
 				country_zone_signal = 0
 
-				rate_list = frappe.get_list('Rates',
+				rate_list = frappe.get_list('Selling Rate',
 								filters={
 									'country': self.consignee_country,
 									'import__export': self.imp__exp,
@@ -394,11 +402,11 @@ class Booking(Document):
 						if str(rate_entry.valid_from) <= str(today) :
 							if rate_entry.expiry_date :
 								if str(rate_entry.expiry_date) >= str(today) :
-									rate_doc = frappe.get_doc('Rates', rate_entry.name)
+									rate_doc = frappe.get_doc('Selling Rate', rate_entry.name)
 									signal = 1
 									break
 							else :
-								rate_doc = frappe.get_doc('Rates', rate_entry.name)
+								rate_doc = frappe.get_doc('Selling Rate', rate_entry.name)
 								signal = 1
 								break
 									
@@ -416,11 +424,11 @@ class Booking(Document):
 								country_zone_signal = 1
 
 						# else :
-						# 	frappe.throw("Rates List for <b>'{}'</b> is not Available for Today's Date to <b>{}</b> in <b>{}</b> through <b>{}</b> with <b>{}</b> service.".format(row.packaging_type, self.imp__exp, self.zone, self.mode_of_transportation, self.service_type))
+						# 	frappe.throw("Selling Rate List for <b>'{}'</b> is not Available for Today's Date to <b>{}</b> in <b>{}</b> through <b>{}</b> with <b>{}</b> service.".format(row.packaging_type, self.imp__exp, self.zone, self.mode_of_transportation, self.service_type))
 					
 
 				if country_zone_signal == 0 :
-					rate_list = frappe.get_list('Rates',
+					rate_list = frappe.get_list('Selling Rate',
 								filters={
 									'zone': self.zone,
 									'import__export': self.imp__exp,
@@ -435,11 +443,11 @@ class Booking(Document):
 							if str(rate_entry.valid_from) <= str(today) :
 								if rate_entry.expiry_date :
 									if str(rate_entry.expiry_date) >= str(today) :
-										rate_doc = frappe.get_doc('Rates', rate_entry.name)
+										rate_doc = frappe.get_doc('Selling Rate', rate_entry.name)
 										signal = 1
 										break
 								else :
-									rate_doc = frappe.get_doc('Rates', rate_entry.name)
+									rate_doc = frappe.get_doc('Selling Rate', rate_entry.name)
 									signal = 1
 									break
 									
@@ -454,9 +462,9 @@ class Booking(Document):
 							if count == 0:
 								amount = amount + (last_row_rate.rate * row.total_identical_parcels)
 						else :
-							frappe.throw("Rates List for <b>'{}'</b> is not Available for Today's Date to <b>{}</b> in <b>{}</b> through <b>{}</b> with <b>{}</b> service.".format(row.packaging_type, self.imp__exp, self.zone, self.mode_of_transportation, self.service_type))
+							frappe.throw("Selling Rate List for <b>'{}'</b> is not Available for Today's Date to <b>{}</b> in <b>{}</b> through <b>{}</b> with <b>{}</b> service.".format(row.packaging_type, self.imp__exp, self.zone, self.mode_of_transportation, self.service_type))
 					else :
-						frappe.throw("No Rates List Available!")
+						frappe.throw("No Selling Rate List Available!")
 			
 			self.amount = amount	
 

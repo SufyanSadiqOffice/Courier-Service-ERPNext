@@ -5,10 +5,8 @@ import frappe
 from frappe.model.document import Document
 
 
-class Rates(Document):
-	
+class SellingRate(Document):
 	def before_save(self) :
 		if self.expiry_date :
 			if str(self.expiry_date) <= str(self.valid_from) :
 				frappe.throw("Expiry Date must be greater than Valid From Date")
-

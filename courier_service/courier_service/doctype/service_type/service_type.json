@@ -7,6 +7,8 @@
  "engine": "InnoDB",
  "field_order": [
   "service_type",
+  "column_break_kvzm",
+  "imp__exp",
   "section_break_ecvj",
   "description"
  ],
@@ -25,11 +27,21 @@
    "fieldname": "description",
    "fieldtype": "Small Text",
    "label": "Description"
+  },
+  {
+   "fieldname": "column_break_kvzm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "imp__exp",
+   "fieldtype": "Select",
+   "label": "Imp / Exp",
+   "options": "Import\nExport"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-01-07 02:35:47.019736",
+ "modified": "2024-06-27 17:29:46.158056",
  "modified_by": "Administrator",
  "module": "Courier Service",
  "name": "Service Type",

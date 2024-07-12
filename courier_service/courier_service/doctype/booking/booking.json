@@ -147,7 +147,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Customer Country",
-   "options": "Country or Territory",
+   "options": "Country",
    "read_only": 1
   },
   {
@@ -657,7 +657,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-16 16:26:22.487541",
+ "modified": "2024-07-08 18:57:02.714492",
  "modified_by": "Administrator",
  "module": "Courier Service",
  "name": "Booking",

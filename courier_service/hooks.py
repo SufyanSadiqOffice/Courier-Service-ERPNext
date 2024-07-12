@@ -11,10 +11,24 @@ fixtures = [
       "doctype" : "Custom Field",
       "filters" : [
         [  
-          "fieldname" , "in" , ("custom_booking")
-	  	]  
+          "fieldname" , "in" , ("custom_booking","custom_icris_account","custom_import_control","custom_allow_delivery_confirmation_signature",
+                                "custom_extended_area_surcharge","custom_additional_handling_charges","custom_allow_saturday_delivery",
+                                "custom_shipping_bill_charges_applicable","custom_return_electronic_label","custom_residential_surcharge",
+                                "custom_remote_area_surcharge","custom_large_package_surcharge","custom_allow_direct_delivery_only",
+                                "custom_dutytax_forwarding_surcharge","custom_insurance_of_declared_value",
+                                
+                                "custom_express_plus_exp","custom_express","custom_express_saver","custom_expedited","custom_express_freight",
+                                "custom_express_freight_midday","custom_express_plus","custom_express_imp","custom_express_saver_imp","custom_expedited_imp",
+                                "custom_express_freight_imp",
+                                )
+	  	  
+        ]  
       ]
 	},
+    
+
+
+
 ]
 
 # Includes in <head>
@@ -126,7 +140,7 @@ fixtures = [
 # Override standard doctype classes
 
 override_doctype_class = {
-	"Sales Invoice": "courier_service.courier_service.doctype.overrides.booking_invoice.BookingInvoice",
+	"Sales Invoice": "courier_service.courier_service.overrides.booking_invoice.BookingInvoice",
 }
 
 # Document Events

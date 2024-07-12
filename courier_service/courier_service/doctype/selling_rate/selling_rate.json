@@ -1,12 +1,12 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:rate_title",
- "creation": "2024-01-07 03:14:44.264757",
+ "autoname": "format:{icris_account}-{service_type}-{based_on}-{#######}",
+ "creation": "2024-06-28 15:01:07.157044",
+ "default_view": "List",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "rate_title",
   "icris_account",
   "based_on",
   "zone",
@@ -18,10 +18,42 @@
   "import__export",
   "valid_from",
   "expiry_date",
+  "full_tariff",
   "section_break_oyzq",
   "package_rate"
  ],
  "fields": [
+  {
+   "fieldname": "icris_account",
+   "fieldtype": "Link",
+   "label": "ICRIS Account",
+   "options": "ICRIS Account",
+   "reqd": 1
+  },
+  {
+   "default": "Zone",
+   "fieldname": "based_on",
+   "fieldtype": "Select",
+   "label": "Based On",
+   "options": "Zone\nCountry"
+  },
+  {
+   "depends_on": "eval: doc.based_on == 'Zone' ;",
+   "fieldname": "zone",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Zone",
+   "mandatory_depends_on": "eval: doc.based_on == 'Zone' ;",
+   "options": "Zone"
+  },
+  {
+   "depends_on": "eval: doc.based_on == 'Country' ;",
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "mandatory_depends_on": "eval: doc.based_on == 'Country' ;",
+   "options": "Country"
+  },
   {
    "fieldname": "mode_of_transportation",
    "fieldtype": "Link",
@@ -43,10 +75,18 @@
    "fieldtype": "Column Break"
   },
   {
+   "fieldname": "package_type",
+   "fieldtype": "Link",
+   "label": "Package Type",
+   "options": "Package Types"
+  },
+  {
+   "fetch_from": "service_type.imp__exp",
    "fieldname": "import__export",
    "fieldtype": "Select",
    "label": "Import / Export",
-   "options": "Import\nExport"
+   "options": "\nImport\nExport",
+   "read_only": 1
   },
   {
    "fieldname": "valid_from",
@@ -72,58 +112,20 @@
    "reqd": 1
   },
   {
-   "fieldname": "rate_title",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Rate Title",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "depends_on": "eval: doc.based_on == 'Zone' ;",
-   "fieldname": "zone",
+   "fieldname": "full_tariff",
    "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Zone",
-   "mandatory_depends_on": "eval: doc.based_on == 'Zone' ;",
-   "options": "Zone"
-  },
-  {
-   "fieldname": "package_type",
-   "fieldtype": "Link",
-   "label": "Package Type",
-   "options": "Package Types"
-  },
-  {
-   "fieldname": "icris_account",
-   "fieldtype": "Link",
-   "label": "ICRIS Account",
-   "options": "ICRIS Account",
-   "reqd": 1
-  },
-  {
-   "default": "Zone",
-   "fieldname": "based_on",
-   "fieldtype": "Select",
-   "label": "Based On",
-   "options": "Zone\nCountry"
-  },
-  {
-   "depends_on": "eval: doc.based_on == 'Country' ;",
-   "fieldname": "country",
-   "fieldtype": "Link",
-   "label": "Country",
-   "mandatory_depends_on": "eval: doc.based_on == 'Country' ;",
-   "options": "Country"
+   "label": "Full Tariff",
+   "options": "Full Tariff",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-04-05 12:54:05.793117",
+ "modified": "2024-07-01 14:50:28.836102",
  "modified_by": "Administrator",
  "module": "Courier Service",
- "name": "Rates",
- "naming_rule": "By fieldname",
+ "name": "Selling Rate",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {

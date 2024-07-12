@@ -1,0 +1,133 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{service_type}-COMB-{####}",
+ "creation": "2024-06-12 12:34:59.548222",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "service_type",
+  "based_on",
+  "zone",
+  "country",
+  "mode_of_transportation",
+  "column_break_ipoa",
+  "package_type",
+  "import__export",
+  "valid_from",
+  "expiry_date",
+  "section_break_oyzq",
+  "package_rate"
+ ],
+ "fields": [
+  {
+   "default": "Zone",
+   "fieldname": "based_on",
+   "fieldtype": "Select",
+   "label": "Based On",
+   "options": "Zone\nCountry",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval: doc.based_on == 'Zone' ;",
+   "fieldname": "zone",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Zone",
+   "mandatory_depends_on": "eval: doc.based_on == 'Zone' ;",
+   "options": "Zone"
+  },
+  {
+   "depends_on": "eval: doc.based_on == 'Country' ;",
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "mandatory_depends_on": "eval: doc.based_on == 'Country' ;",
+   "options": "Country"
+  },
+  {
+   "default": "Air",
+   "fieldname": "mode_of_transportation",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Mode of Transportation",
+   "options": "Mode of Transportation",
+   "reqd": 1
+  },
+  {
+   "fieldname": "service_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Service Type",
+   "options": "Service Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_ipoa",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "package_type",
+   "fieldtype": "Link",
+   "label": "Package Type",
+   "options": "Package Types",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "service_type.imp__exp",
+   "fieldname": "import__export",
+   "fieldtype": "Select",
+   "label": "Import / Export",
+   "options": "\nImport\nExport",
+   "read_only": 1
+  },
+  {
+   "fieldname": "valid_from",
+   "fieldtype": "Date",
+   "label": "Valid From",
+   "reqd": 1
+  },
+  {
+   "fieldname": "expiry_date",
+   "fieldtype": "Date",
+   "label": "Expiry Date"
+  },
+  {
+   "fieldname": "section_break_oyzq",
+   "fieldtype": "Section Break",
+   "label": "Rate List"
+  },
+  {
+   "fieldname": "package_rate",
+   "fieldtype": "Table",
+   "label": "Packa Rate",
+   "options": "Package Rate",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-06-28 12:24:44.037013",
+ "modified_by": "Administrator",
+ "module": "Courier Service",
+ "name": "Full Tariff",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
