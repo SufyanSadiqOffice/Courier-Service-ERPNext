@@ -1,6 +1,6 @@
-## Courier Service
+## ULS Booking
 
-Ship your Logistics.
+Booking app for ULS.
 
 #### License
 

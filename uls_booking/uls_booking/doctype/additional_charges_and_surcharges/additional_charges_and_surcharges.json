@@ -1,0 +1,37 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-18 18:45:54.428206",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "additional_charges_type",
+  "charges"
+ ],
+ "fields": [
+  {
+   "fieldname": "additional_charges_type",
+   "fieldtype": "Link",
+   "label": "Additional Charges Type",
+   "options": "Additional Charges"
+  },
+  {
+   "fieldname": "charges",
+   "fieldtype": "Currency",
+   "label": "Charges"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-07-18 18:45:54.428206",
+ "modified_by": "Administrator",
+ "module": "ULS Booking",
+ "name": "Additional Charges and Surcharges",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

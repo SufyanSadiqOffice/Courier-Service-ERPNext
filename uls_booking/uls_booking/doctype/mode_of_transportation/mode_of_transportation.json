@@ -1,0 +1,55 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:mode_of_transportation",
+ "creation": "2024-07-18 19:09:28.601036",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "mode_of_transportation",
+  "section_break_cqav",
+  "description"
+ ],
+ "fields": [
+  {
+   "fieldname": "mode_of_transportation",
+   "fieldtype": "Data",
+   "label": "Mode of Transportation",
+   "unique": 1
+  },
+  {
+   "fieldname": "section_break_cqav",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-07-18 19:09:28.601036",
+ "modified_by": "Administrator",
+ "module": "ULS Booking",
+ "name": "Mode of Transportation",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

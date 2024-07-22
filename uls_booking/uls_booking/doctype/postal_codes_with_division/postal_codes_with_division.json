@@ -1,0 +1,59 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-18 18:42:43.252261",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "postal_code",
+  "city",
+  "iata_code",
+  "division",
+  "additional_charge_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "postal_code",
+   "fieldtype": "Link",
+   "label": "Postal Code",
+   "options": "Postal Codes"
+  },
+  {
+   "fetch_from": "postal_code.city",
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City"
+  },
+  {
+   "fetch_from": "postal_code.iata_code",
+   "fieldname": "iata_code",
+   "fieldtype": "Data",
+   "label": "IATA Code"
+  },
+  {
+   "fetch_from": "postal_code.area",
+   "fieldname": "division",
+   "fieldtype": "Data",
+   "label": "Area"
+  },
+  {
+   "fieldname": "additional_charge_on",
+   "fieldtype": "Select",
+   "label": "Additional Charge On",
+   "options": "\nImport\nExport\nBoth"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-07-18 18:42:43.252261",
+ "modified_by": "Administrator",
+ "module": "ULS Booking",
+ "name": "Postal Codes With Division",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

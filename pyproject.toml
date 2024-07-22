@@ -1,9 +1,9 @@
 [project]
-name = "courier_service"
+name = "uls_booking"
 authors = [
     { name = "Sowaan", email = "sufyan.sadiq@sowaan.com"}
 ]
-description = "Ship your Logistics."
+description = "Booking app for ULS."
 requires-python = ">=3.10"
 readme = "README.md"
 dynamic = ["version"]

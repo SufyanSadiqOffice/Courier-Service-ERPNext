@@ -1,0 +1,214 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:additional_charge_type",
+ "creation": "2024-07-18 19:03:17.693963",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "additional_charge_type",
+  "additional_charge_based_on",
+  "if_selected",
+  "column_break_gqas",
+  "section_break_rveu",
+  "impexp",
+  "charge_based_on",
+  "charge_depends_on",
+  "column_break_clmy",
+  "percentage_on",
+  "amount",
+  "percentage",
+  "import_amount",
+  "export_amount",
+  "minimum_amount",
+  "section_break_cmyf",
+  "max_weight",
+  "column_break_rbjd",
+  "max_length",
+  "max_width",
+  "max_length_plus_girth",
+  "section_break_zrfg",
+  "amount_per_shipment",
+  "column_break_zbzr",
+  "amount_per_kg"
+ ],
+ "fields": [
+  {
+   "fieldname": "additional_charge_type",
+   "fieldtype": "Data",
+   "label": "Additional Charge Type",
+   "read_only": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "additional_charge_based_on",
+   "fieldtype": "Select",
+   "label": "Additional Charge Based On",
+   "options": "Based on ImpExp\nBased on Area\nBased on Declare Value\nBased on Weight, Length And Width\nBased on Weight And Length Plus Girth\nBased on Weight, Length And Length Plus Girth\nOthers",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "if_selected",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "IF Selected"
+  },
+  {
+   "fieldname": "column_break_gqas",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_rveu",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval: doc.additional_charge_based_on == 'Based on ImpExp' ;",
+   "fieldname": "impexp",
+   "fieldtype": "Select",
+   "label": "Imp/Exp",
+   "options": "\nImport\nExport\nBoth",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: doc.additional_charge_based_on != \"Based on Area\";",
+   "fieldname": "charge_based_on",
+   "fieldtype": "Select",
+   "label": "Charge Based On",
+   "options": "Amount\nPercentage",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: doc.charge_based_on == 'Amount' && doc.additional_charge_based_on != \"Based on Area\" ;",
+   "fieldname": "charge_depends_on",
+   "fieldtype": "Select",
+   "label": "Charge Depends On",
+   "options": "Per Shipment\nPer Package\nPer KG",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_clmy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: doc.charge_based_on == 'Percentage' && doc.additional_charge_based_on != 'Based on Area' ;",
+   "fieldname": "percentage_on",
+   "fieldtype": "Select",
+   "label": "Percentage On",
+   "options": "Total Amount with Services\nAmount After Discount\nDeclare Value\nAmount Before Discount",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval: doc.charge_based_on == 'Amount' && doc.additional_charge_based_on != 'Based on Area' && doc.impexp != 'Both' ;",
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount"
+  },
+  {
+   "depends_on": "eval: doc.charge_based_on == 'Percentage' && doc.additional_charge_based_on != 'Based on Area' ;",
+   "fieldname": "percentage",
+   "fieldtype": "Percent",
+   "label": "Percentage"
+  },
+  {
+   "depends_on": "eval: doc.impexp == 'Both' ;",
+   "fieldname": "import_amount",
+   "fieldtype": "Currency",
+   "label": "Import Amount"
+  },
+  {
+   "depends_on": "eval: doc.impexp == 'Both' ;",
+   "fieldname": "export_amount",
+   "fieldtype": "Currency",
+   "label": "Export Amount"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.additional_charge_based_on != 'Based on Area' ;",
+   "fieldname": "minimum_amount",
+   "fieldtype": "Currency",
+   "label": "Minimum Amount"
+  },
+  {
+   "fieldname": "section_break_cmyf",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.additional_charge_based_on == 'Based on Weight, Length And Width' || doc.additional_charge_based_on == 'Based on Weight And Length Plus Girth' || doc.additional_charge_based_on == 'Based on Weight, Length And Length Plus Girth' ;",
+   "fieldname": "max_weight",
+   "fieldtype": "Float",
+   "label": "Max Weight"
+  },
+  {
+   "fieldname": "column_break_rbjd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.additional_charge_based_on == 'Based on Weight, Length And Width' || doc.additional_charge_based_on == 'Based on Weight, Length And Length Plus Girth' ;",
+   "fieldname": "max_length",
+   "fieldtype": "Float",
+   "label": "Max Length (Longest Side In cm)"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.additional_charge_based_on == 'Based on Weight, Length And Width' ;",
+   "fieldname": "max_width",
+   "fieldtype": "Float",
+   "label": "Max Width (Second Longest Side In cm)"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval: doc.additional_charge_based_on == 'Based on Weight And Length Plus Girth' || doc.additional_charge_based_on == 'Based on Weight, Length And Length Plus Girth' ;",
+   "fieldname": "max_length_plus_girth",
+   "fieldtype": "Float",
+   "label": "Max Length Plus Girth (In cm)"
+  },
+  {
+   "fieldname": "section_break_zrfg",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval: doc.additional_charge_based_on == 'Based on Area' ;",
+   "fieldname": "amount_per_shipment",
+   "fieldtype": "Currency",
+   "label": "Amount Per Shipment"
+  },
+  {
+   "fieldname": "column_break_zbzr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: doc.additional_charge_based_on == 'Based on Area' ;",
+   "fieldname": "amount_per_kg",
+   "fieldtype": "Currency",
+   "label": "Amount Per KG"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-07-20 14:59:20.111868",
+ "modified_by": "Administrator",
+ "module": "ULS Booking",
+ "name": "Additional Charges",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

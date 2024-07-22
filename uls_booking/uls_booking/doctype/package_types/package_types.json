@@ -1,0 +1,68 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:package_type",
+ "creation": "2024-07-18 19:05:39.435918",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "package_type",
+  "column_break_ihvl",
+  "package",
+  "section_break_wbgl",
+  "description"
+ ],
+ "fields": [
+  {
+   "fieldname": "package_type",
+   "fieldtype": "Data",
+   "label": "Package Type",
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_ihvl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "package",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Package"
+  },
+  {
+   "fieldname": "section_break_wbgl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-07-18 19:05:39.435918",
+ "modified_by": "Administrator",
+ "module": "ULS Booking",
+ "name": "Package Types",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
